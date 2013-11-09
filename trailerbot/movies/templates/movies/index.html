@@ -33,16 +33,14 @@
 
 			function displayNextTiles() {
 				if (tileGroup == 3){
-					alert(selections); 
-					for (var i = 0; i < selections.length; i++) {
-						alert(selections[i]);
-						var single_selection = selections[i];
-					}	
+					alert(selections);
+					selections_string = selections.toString();
+					selections_encoded = encodeURIComponent(selections_string);
 					$(function() {
-						$.get("http://www.tastekid.com/ask/ws?q="+  +"&f=whatmo5073&k=ytc4ztyxnzy0", function(responseXml) {
+						$.get("http://www.tastekid.com/ask/ws?q="+ selections_encoded +"&f=whatmo5073&k=ytc4ztyxnzy0", function(responseXml) {
 						var xml = $(responseXml);
-        			});
-    });
+        				});
+    				});
 				}
 				else{
 					curGroup = movie_groups[tileGroup];

@@ -16,3 +16,9 @@ class newMovie (models.Model):
 	
 	def __unicode__(self):
 		return u"%s" % self.id
+
+class Path (models.Model):
+	path_string = models.CharField(max_length=1000)
+	
+	def __unicode__(self):
+		return u"%s" % self.id
