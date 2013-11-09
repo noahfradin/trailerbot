@@ -17,7 +17,7 @@ def make_js(mv_list):
 	return [[[safe_str(mv.title), safe_str(mv.imdb_id), safe_str(mv.poster)] for mv in mv_grp] for mv_grp in mv_list]
 
 # Create your views here.
-def index(request):
+def index(TemplateView):
 
 	def get(self, request, *args, **kwargs):
 		return HttpResponseRedirect(template.render(context))
@@ -29,12 +29,14 @@ def index(request):
 	db_length = len(newMovie.objects.all())
 	min_id = newMovie.objects.aggregate(Min('id'))['id__min']
 	movies_list = []
+	
 	for j in range(3):
 		temp = []
-		for m in range(8):
+		while len(temp) < 8:
 			idx = randint(min_id, min_id+db_length)
 			movie_data = newMovie.objects.get(id=idx)
-			temp.append(movie_data)
+			if 'imdb' in str(movie_data.poster):
+				temp.append(movie_data)
 		movies_list.append(temp)
 
 	template = loader.get_template('movies/index.html')
@@ -52,8 +54,12 @@ def index(request):
 class trailerplay(TemplateView):
 	def get(self, request):
 		template = loader.get_template('movies/trailerplay.html')
-		inputs = ['sel_1','sel_2','sel_3']
-		titles = []
+		db_length = len(newMovie.objects.all())
+		min_id = newMovie.objects.aggregate(Min('id'))['id__min']
+		idx = randint(min_id, min_id+db_length)
+		movie_data = newMovie.objects.get(id=idx)
+		
+
 		# for inp in inputs:
 		# 	titles.append(request[inp])
 
@@ -64,8 +70,7 @@ class trailerplay(TemplateView):
 		# next_two = get_random_two(pool)
         
 		context = RequestContext(request, {
-			'cur_title':"TESTING",
-			'next_title':"TESTING",
+			'movie_data': str(movie_data.trailer).strip(),
 		})
 		return HttpResponse(template.render(context))
 

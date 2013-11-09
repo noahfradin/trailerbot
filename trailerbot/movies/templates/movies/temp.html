@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>	
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Loading Effects for Grid Items | Demo 2</title>
+		<meta name="description" content="Loading Effects for Grid Items with CSS Animations" />
+		<meta name="keywords" content="css animation, loading effect, google plus, grid items, masonry" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico"> 
+		<link rel="stylesheet" type="text/css" href="css/default.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<h1 id="test">empty</h1>
+			<!-- <header>
+				<h1>Finding Your Favorite Movie</h1>	
+			</header> -->
+			<script type="text/javascript">
+			
+			var tileGroup = 0;
+			{% autoescape off %}
+			var movie_groups = {{ movies_list }};
+			{% endautoescape %}
+			selections = [];
+			tileGroup = 0;
+			var curGroup = [];
+
+			function displayNextTiles() {
+				if (tileGroup == 3){
+					alert(selections);
+					selections_string = selections.toString();
+					selections_encoded = encodeURIComponent(selections_string);
+					$(function() {
+						$.get("http://www.tastekid.com/ask/ws?q="+ selections_encoded +"&f=whatmo5073&k=ytc4ztyxnzy0", function(responseXml) {
+						var xml = $(responseXml);
+        				});
+    				});
+				}
+				else{
+					curGroup = movie_groups[tileGroup];
+
+					for (var i = 1; i <= curGroup.length; i++) {
+						console.log(i);
+						console.log("src changed to "+curGroup[i-1][2]);
+						console.log(curGroup);
+						node = $('#tile'+i);
+						node.data(curGroup[i-1]);
+						node.text(curGroup[i-1][0]);
+					// $("#tile"+i).attr('href',curGroup[i-1][2]);
+					};
+					tileGroup += 1;
+
+				}
+			};
+
+
+
+
+
+			// function jqueryLoaded(){
+			// 	alert('loaded');
+			// }
+
+			document.addEventListener('DOMContentLoaded', function(evt) {
+				// google.load('jquery', '1.6', {"callback":jqueryLoaded});
+				//displayNextTiles();
+				curGroup = movie_groups[tileGroup];
+
+				for (var i = 1; i <= curGroup.length; i++) {
+					console.log(i);
+					console.log("src changed to "+curGroup[i-1][2]);
+					console.log(curGroup);
+					node = $('#tile'+i);
+					node.data(curGroup[i-1]);
+					node.text(curGroup[i-1][0]);
+					// $("#tile"+i).attr('href',curGroup[i-1][2]);
+					$('#tile'+i).click(Function('selections.push($("#tile'+i+'").data()[0]);console.log(selections);console.log(tileGroup);displayNextTiles();'));
+				};
+				tileGroup += 1;
+
+			});
+
+
+			 
+			 //document.getElementById("test").innerHTML = movie_groups;
+
+			//document.onload(function(){displayNextTiles();});
+			</script>
+			<!-- <button onclick="displayNextTiles()"></button> -->
+			<ul class="grid effect-4" id="grid">
+				
+				<!-- <li><img id="tile1" src="http://ia.media-imdb.com/images/M/MV5BMTI3Nzc5MDY3MV5BMl5BanBnXkFtZTcwNTg0MTcyMQ@@._V1._SX140_CR0,0,140,209_.jpg"></li>
+				<li><a ><img id="tile2" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<li><a ><img id="tile3" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<li><a> <img id="tile4"src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<li><a ><img id="tile5"src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+
+				<li><a ><img id="tile6" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+
+				<li><a ><img id="tile7" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<li><a ><img id="tile8" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li> -->
+				<li><a id="tile1"></a></li>
+				<li><a id="tile2"></a></li>
+				<li><a id="tile3"></a></li>
+				<li><a id="tile4"></a></li>
+				<li><a id="tile5"></a></li>
+				<li><a id="tile6"></a></li>
+				<li><a id="tile7"></a></li>
+				<li><a id="tile8"></a></li>
+			</ul>
+		</div>
+		<script src="js/masonry.pkgd.min.js"></script>
+		<script src="js/imagesloaded.js"></script>
+		<script src="js/classie.js"></script>
+		<script src="js/AnimOnScroll.js"></script>
+		<script>
+			new AnimOnScroll( document.getElementById( 'grid' ), {
+				minDuration : 0.4,
+				maxDuration : 0.7,
+				viewportFactor : 0.2
+			} );
+		</script>
+	</body>
+</html>

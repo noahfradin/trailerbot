@@ -1,32 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-	<head>
-		{% load staticfiles %}
-		<script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>	
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Loading Effects for Grid Items | Demo 2</title>
-		<meta name="description" content="Loading Effects for Grid Items with CSS Animations" />
-		<meta name="keywords" content="css animation, loading effect, google plus, grid items, masonry" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico"> 
-		<link rel="stylesheet" type="text/css" href="{% static "default.css" %}" />
-		<link rel="stylesheet" type="text/css" href="{% static "component.css" %}" />
-		<script src="static/js/modernizr.custom.js"></script>
-		<style type="text/css">
-		.grid {
+.grid {
 	max-width: 69em;
 	list-style: none;
 	margin: 30px auto;
-	/*padding: 0;*/
+	padding: 0;
 }
 
 .grid li {
 	display: block;
 	float: left;
-	padding: 0px;
+	padding: 7px;
 	/*Can Adjust width here!*/
 	width: 25%;
 	opacity: 0;
@@ -284,115 +266,3 @@
 		width: 100%;
 	}
 }
-
-		</style>
-	</head>
-	<body>
-        <!-- <form id="sel_form" name="input" action="/movies" method="post">
-         <input id="sel_1" type="hidden" name="sel_1" value="">
-         <input id="sel_2" type="hidden" name="sel_2" value="">
-         <input id="sel_3" type="hidden" name="sel_3" value="">
-         <input id="submit" type="submit" value="Submit">
-        </form> -->
-    	<a hidden="true" href="" id="escape_hatch"></a>
-		<div class="container">
-			<!-- <header>
-				<h1>Finding Your Favorite Movie</h1>	
-			</header> -->
-			<script type="text/javascript">
-			
-			var tileGroup = 0;
-			{% autoescape off %}
-			var movie_groups = {{ movies_list }};
-			{% endautoescape %}
-			selections = [];
-			tileGroup = 0;
-			var curGroup = [];
-
-			function displayNextTiles() {
-				if (tileGroup == 3){
-					// alert("Submitting " + selections.toString());
-					$('#escape_hatch').attr('href', "/movies/trailer/"+selections.join("!!!"));
-					$('#escape_hatch')[0].click();
-                    $('form').submit();
-            //Add button and form w/ inputs, in click handler add check on counter to post data if it gets too high
-			}
-				else{
-					curGroup = movie_groups[tileGroup];
-
-					for (var i = 1; i <= curGroup.length; i++) {
-						console.log(i);
-						console.log("src changed to "+curGroup[i-1][2]);
-						console.log(curGroup);
-						node = $('#tile'+i);
-						node.data(curGroup[i-1]);
-						node.text(curGroup[i-1][0]);
-						node.attr('src',curGroup[i-1][2]);
-					// $("#tile"+i).attr('href',curGroup[i-1][2]);
-					};
-					tileGroup += 1;
-
-				}
-			};
-
-
-			document.addEventListener('DOMContentLoaded', function(evt) {
-				//displayNextTiles();
-				curGroup = movie_groups[tileGroup];
-
-				for (var i = 1; i <= curGroup.length; i++) {
-					console.log(i);
-					console.log("src changed to "+curGroup[i-1][2]);
-					console.log(curGroup);
-					node = $('#tile'+i);
-					node.data(curGroup[i-1]);
-					node.text(curGroup[i-1][0]);
-					node.attr('src',curGroup[i-1][2]);
-					$('#tile'+i).click(Function('$("#sel_"+tileGroup).attr("value",$("#tile'+i+'").data()[0]);selections.push($("#tile'+i+'").data()[0]);console.log(selections);console.log(tileGroup);displayNextTiles();'));
-				};
-				tileGroup += 1;
-
-			});
-
-
-			 
-			 //document.getElementById("test").innerHTML = movie_groups;
-
-			//document.onload(function(){displayNextTiles();});
-			</script>
-			<!-- <button onclick="displayNextTiles()"></button> -->
-			<ul class="grid effect-4" id="grid">
-				
-				<li><img id="tile1" src="http://ia.media-imdb.com/images/M/MV5BMTI3Nzc5MDY3MV5BMl5BanBnXkFtZTcwNTg0MTcyMQ@@._V1._SX140_CR0,0,140,209_.jpg"></li>
-				<li><a ><img id="tile2" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<li><a ><img id="tile3" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<li><a> <img id="tile4"src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<li><a ><img id="tile5"src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-
-				<li><a ><img id="tile6" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-
-				<li><a ><img id="tile7" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<li><a ><img id="tile8" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<!-- <li><a id="tile1"></a></li>
-				<li><a id="tile2"></a></li>
-				<li><a id="tile3"></a></li>
-				<li><a id="tile4"></a></li>
-				<li><a id="tile5"></a></li>
-				<li><a id="tile6"></a></li>
-				<li><a id="tile7"></a></li>
-				<li><a id="tile8"></a></li> -->
-			</ul>
-		</div>
-		<script src="js/masonry.pkgd.min.js"></script>
-		<script src="js/imagesloaded.js"></script>
-		<script src="js/classie.js"></script>
-		<script src="js/AnimOnScroll.js"></script>
-		<script>
-			new AnimOnScroll( document.getElementById( 'grid' ), {
-				minDuration : 0.4,
-				maxDuration : 0.7,
-				viewportFactor : 0.2
-			} );
-		</script>
-	</body>
-</html>
