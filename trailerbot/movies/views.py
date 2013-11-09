@@ -9,6 +9,7 @@ from models import newMovie
 
 def safe_str(s):
 	return normalize('NFKD', s).encode('ascii', 'ignore')
+    
 def make_js(mv_list):
 	return [[[safe_str(mv.title), safe_str(mv.imdb_id), safe_str(mv.poster)] for mv in mv_grp] for mv_grp in mv_list]
 
@@ -46,11 +47,29 @@ def index(request):
 # 		return HttpResponse('result')
 
 class trailerplay(TemplateView):
-	def get(self, request):
-		# <view logic>
-		return HttpResponse(template.render)
+	def post(self, request):
+		template = loader.get_template('movies/trailerplay.html')
+        inputs = ['sel_1','sel_2','sel_3']
+        titles = []
+        for inp in inputs:
+            titles.append(request[inp])
+        
+        pool = []
+        for title in titles:
+            pool.extend(get_tastekid_recs(title))
+            
+        next_two = get_random_two(pool)
+        
+        context = RequestContext(request, {
+            'cur_title':next_two[0],
+            'next_title':next_two[1]
+        }
+        
+		return HttpResponse(template.render(context))
 
-
+def get_random_two(pool):
+    return [pool[randint(0,len(pool))] for i in range(2)]
+        
 # class trailerplay(TemplateView):
 # 	template = loader.get_template('movies/trailerplay.html')
 # 	def get(self, request, *args, **kwargs):
