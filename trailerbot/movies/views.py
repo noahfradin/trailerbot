@@ -7,6 +7,9 @@ from unicodedata import normalize
 
 from models import newMovie
 
+import logging
+
+
 def safe_str(s):
 	return normalize('NFKD', s).encode('ascii', 'ignore')
     
@@ -47,24 +50,23 @@ def index(request):
 # 		return HttpResponse('result')
 
 class trailerplay(TemplateView):
-	def post(self, request):
+	def get(self, request):
 		template = loader.get_template('movies/trailerplay.html')
-        inputs = ['sel_1','sel_2','sel_3']
-        titles = []
-        for inp in inputs:
-            titles.append(request[inp])
-        
-        pool = []
-        for title in titles:
-            pool.extend(get_tastekid_recs(title))
+		inputs = ['sel_1','sel_2','sel_3']
+		titles = []
+		# for inp in inputs:
+		# 	titles.append(request[inp])
+
+		# pool = []
+		# for title in titles:
+		# 	pool.extend(get_tastekid_recs(title))
             
-        next_two = get_random_two(pool)
+		# next_two = get_random_two(pool)
         
-        context = RequestContext(request, {
-            'cur_title':next_two[0],
-            'next_title':next_two[1]
-        }
-        
+		context = RequestContext(request, {
+			'cur_title':"TESTING",
+			'next_title':"TESTING",
+		})
 		return HttpResponse(template.render(context))
 
 def get_random_two(pool):

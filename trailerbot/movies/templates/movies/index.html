@@ -17,13 +17,13 @@
 		<script src="js/modernizr.custom.js"></script>
 	</head>
 	<body>
-        <form id="sel_form" name="input" action="/movies/trailerplay" method="post">
+        <form id="sel_form" name="input" action="/movies" method="post">
          <input id="sel_1" type="hidden" name="sel_1" value="">
          <input id="sel_2" type="hidden" name="sel_2" value="">
          <input id="sel_3" type="hidden" name="sel_3" value="">
-         <input id="submit" type="submit">
+         <input id="submit" type="submit" value="Submit">
         </form>
-    
+    	<a hidden="true" href="" id="escape_hatch"></a>
 		<div class="container">
 			<h1 id="test">empty</h1>
 			<!-- <header>
@@ -42,7 +42,9 @@
 			function displayNextTiles() {
 				if (tileGroup == 3){
 					alert("Submitting " + selections.toString());
-                    $('#sel_form').submit();
+					$('#escape_hatch').attr('href', "/movies/trailer/"+encodeURIComponent(selections));
+					$('#escape_hatch')[0].click();
+                    $('form').submit();
             //Add button and form w/ inputs, in click handler add check on counter to post data if it gets too high
 			}
 				else{
@@ -75,7 +77,7 @@
 					node.data(curGroup[i-1]);
 					node.text(curGroup[i-1][0]);
 					// $("#tile"+i).attr('href',curGroup[i-1][2]);
-					$('#tile'+i).click(Function('$("#sel_"+tileGroup).value($("#tile'+i+'").data()[0]);selections.push($("#tile'+i+'").data()[0]));console.log(selections);console.log(tileGroup);displayNextTiles();'));
+					$('#tile'+i).click(Function('$("#sel_"+tileGroup).attr("value",$("#tile'+i+'").data()[0]);selections.push($("#tile'+i+'").data()[0]);console.log(selections);console.log(tileGroup);displayNextTiles();'));
 				};
 				tileGroup += 1;
 
