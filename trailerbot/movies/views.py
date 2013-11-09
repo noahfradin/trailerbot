@@ -2,10 +2,14 @@ from django.shortcuts import render, loader, RequestContext, HttpResponse
 from django.db.models import Min
 from random import randint
 
+from unicodedata import normalize
+
 from models import newMovie
 
+def safe_str(s):
+	return normalize('NFKD', s).encode('ascii', 'ignore')
 def make_js(mv_list):
-	return [[[str(mv.title), str(mv.imdb_id), str(mv.poster)] for mv in mv_grp] for mv_grp in mv_list]
+	return [[[safe_str(mv.title), safe_str(mv.imdb_id), safe_str(mv.poster)] for mv in mv_grp] for mv_grp in mv_list]
 
 # Create your views here.
 def index(request):

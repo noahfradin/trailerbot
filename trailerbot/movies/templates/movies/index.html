@@ -28,23 +28,37 @@
 			var movie_groups = {{ movies_list }};
 			{% endautoescape %}
 			selections = [];
+			tileGroup = 0;
+			var curGroup = [];
 
 			function displayNextTiles() {
-				curGroup = movie_groups[tileGroup];
-				
-				for (var i = 1; i <= curGroup.length; i++) {
-					console.log(i);
-					console.log("src changed to "+curGroup[i-1][2]);
-					console.log(curGroup);
-					$("#tile"+i).attr('src',curGroup[i-1][2]);
-					$('#tile'+i).click(function(){
-						selections.push(curGroup[i-1][1]);
-						console.log(selections);
-						displayNextTiles();
+				if (tileGroup == 3){
+					alert(selections); 
+					for (var i = 0; i < selections.length; i++) {
+						alert(selections[i]);
+						var single_selection = selections[i];
+					}	
+					$(function() {
+						$.get("http://www.tastekid.com/ask/ws?q="+  +"&f=whatmo5073&k=ytc4ztyxnzy0", function(responseXml) {
+						var xml = $(responseXml);
+        			});
+    });
+				}
+				else{
+					curGroup = movie_groups[tileGroup];
+
+					for (var i = 1; i <= curGroup.length; i++) {
 						console.log(i);
-					})
-				};
-				tileGroup += 1;
+						console.log("src changed to "+curGroup[i-1][2]);
+						console.log(curGroup);
+						node = $('#tile'+i);
+						node.data(curGroup[i-1]);
+						node.text(curGroup[i-1][0]);
+					// $("#tile"+i).attr('href',curGroup[i-1][2]);
+					};
+					tileGroup += 1;
+
+				}
 			};
 
 
@@ -55,9 +69,24 @@
 			// 	alert('loaded');
 			// }
 
-			// document.addEventListener('DOMContentLoaded', function(evt) {
-			// 	google.load('jquery', '1.6', {"callback":jqueryLoaded});
-			// });
+			document.addEventListener('DOMContentLoaded', function(evt) {
+				// google.load('jquery', '1.6', {"callback":jqueryLoaded});
+				//displayNextTiles();
+				curGroup = movie_groups[tileGroup];
+
+				for (var i = 1; i <= curGroup.length; i++) {
+					console.log(i);
+					console.log("src changed to "+curGroup[i-1][2]);
+					console.log(curGroup);
+					node = $('#tile'+i);
+					node.data(curGroup[i-1]);
+					node.text(curGroup[i-1][0]);
+					// $("#tile"+i).attr('href',curGroup[i-1][2]);
+					$('#tile'+i).click(Function('selections.push($("#tile'+i+'").data()[0]);console.log(selections);console.log(tileGroup);displayNextTiles();'));
+				};
+				tileGroup += 1;
+
+			});
 
 
 			 
@@ -65,10 +94,10 @@
 
 			//document.onload(function(){displayNextTiles();});
 			</script>
-			<button onclick="displayNextTiles()"></button>
+			<!-- <button onclick="displayNextTiles()"></button> -->
 			<ul class="grid effect-4" id="grid">
 				
-				<li><a ><img id="tile1" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<!-- <li><img id="tile1" src="http://ia.media-imdb.com/images/M/MV5BMTI3Nzc5MDY3MV5BMl5BanBnXkFtZTcwNTg0MTcyMQ@@._V1._SX140_CR0,0,140,209_.jpg"></li>
 				<li><a ><img id="tile2" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
 				<li><a ><img id="tile3" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
 				<li><a> <img id="tile4"src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
@@ -77,7 +106,15 @@
 				<li><a ><img id="tile6" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
 
 				<li><a ><img id="tile7" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
-				<li><a ><img id="tile8" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li>
+				<li><a ><img id="tile8" src="https://lh6.googleusercontent.com/-6kPAj1PEOiA/AAAAAAAAAAI/AAAAAAAAACI/UbJe2kQ6374/photo.jpg"></a></li> -->
+				<li><a id="tile1"></a></li>
+				<li><a id="tile2"></a></li>
+				<li><a id="tile3"></a></li>
+				<li><a id="tile4"></a></li>
+				<li><a id="tile5"></a></li>
+				<li><a id="tile6"></a></li>
+				<li><a id="tile7"></a></li>
+				<li><a id="tile8"></a></li>
 			</ul>
 		</div>
 		<script src="js/masonry.pkgd.min.js"></script>
